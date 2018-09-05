@@ -50,6 +50,9 @@ def judgeError(exit_code):
         print("!!!!ERROR OCCURED!!!!11!!")
         sys.exit()
 
+def get_script_dir():
+    return os.path.abspath(os.path.dirname(__file__))
+
 ###########################################################
 #
 # varidation
@@ -114,8 +117,7 @@ class CsvWriter():
 class CsvReader():
 
     def __init__(self):
-        self.data      = ""
-        self.dim_label = 0
+        self.data      = [[]]
 
     def readFile(self,file_path):
         if isNull(file_path):
@@ -128,13 +130,36 @@ class CsvReader():
 
         self.file = open( file_path , 'r')
         self.data_list = csv.reader(self.file)
-        for self.data_i in self.data_list:
-            self.data = self.data_i
+        for self.data_tmp in self.data_list:
+            self.data_str_tmp = str(self.data_tmp)
+            self.data.append(self.data_str_tmp.split(","))
+
+        del self.data[0]
 
         return NORMAL_CODE
 
     def get_data(self):
-        return self.data[self.dim_label]
+        return self.data
+
+class CsvReaderViaNp():
+
+    #def __init__(self):
+        
+
+    def readFile(self,file_path):
+        if isNull(file_path):
+            print(" input file_name ")
+            return ERROR_CODE
+
+        if not os.path.exists(file_path):
+            print(" do not exist that file " + file_path)
+            return ERROR_CODE
+
+        self.data = np.genfromtxt(file_path,dtype = None,delimiter=",")
+        return NORMAL_CODE
+
+    def get_data(self):
+        return self.data
 
 ###########################################################
 #
