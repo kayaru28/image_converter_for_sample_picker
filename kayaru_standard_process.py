@@ -28,24 +28,24 @@ def min(a,b):
         ans = b
     return ans
 
-def cutStrBeforeKey(key,str):
+def cut_str_before_key(key,str):
     no  = patternMatch(key,str)
     ans = left( str , no - 1) 
     return ans
 
-def cutStrAfterKey(key,str):
+def cut_str_after_key(key,str):
     no  = patternMatch(key,str)
     no  = no + ( len(key) - 1 )
     ans = right( str , len(str) - no )
     return ans
 
-def patternMatch(key,str):
+def pattern_match(key,str):
     # 一致する　：＞0
     # 一致しない：＝0
     ans = str.find(key) + 1
     return ans
 
-def judgeError(exit_code):
+def judge_error(exit_code):
     if exit_code == ERROR_CODE:
         print("!!!!ERROR OCCURED!!!!11!!")
         sys.exit()
@@ -59,7 +59,7 @@ def get_script_dir():
 #
 ###########################################################
 
-def isNotNull(str):
+def is_not_null(str):
     ans = True
 
     if(str == None):
@@ -68,7 +68,7 @@ def isNotNull(str):
         ans = False
     return ans
 
-def isNull(str):
+def is_null(str):
     ans = False
     if(str == None):
         ans = True
@@ -82,54 +82,52 @@ def isNull(str):
 #
 ###########################################################
 
-class CsvWriter():
-    file = ""
+class csvWriter():
+    def __init__(self):
+        self.file = ""
 
-    def openFile(self,file_path):
-        if isNull(file_path):
-            print(" input file_name ")
+    def open_file(self,file_path):
+        if is_null(file_path):
+            echo_null_of_a_value(file_path,locals())
             return ERROR_CODE
 
-        if not os.path.exists(file_path):
-            print(" do not exist that file " + file_path)
-            return ERROR_CODE
-
-        file = open( file_path , 'w')
+        self.file = open( file_path , 'w')
 
         return NORMAL_CODE
 
-    def writeOfList(self,list):
-        if isNull(file):
+    def write_of_list(self,list):
+        if is_null(self.file):
             echo_open_any_file()
             return ERROR_CODE
         self.writer = csv.writer(file, lineterminator='\n')
-        writer.writerow(list)
+        self.writer.writerow(list)
         return NORMAL_CODE
 
-    def writeOfArray2d(self,array_2d):
-        if isNull(file):
+    def write_of_array2d(self,array_2d):
+        if is_null(self.file):
             echo_open_any_file()
             return ERROR_CODE
-        writer = csv.writer(file, lineterminator='\n')
-        writer.writerow(array_2d)
+        self.writer = csv.writer(self.file, lineterminator='\n')
+        self.writer.writerows(array_2d)
         return NORMAL_CODE
 
-class CsvReader():
+class csvReader():
 
     def __init__(self):
         self.data      = [[]]
 
-    def readFile(self,file_path):
-        if isNull(file_path):
-            print(" input file_name ")
+    def read_file(self,file_path):
+        if is_null(file_path):
+            echo_null_of_a_value(file_path,locals())
             return ERROR_CODE
 
         if not os.path.exists(file_path):
-            print(" do not exist that file " + file_path)
+            echo_not_exist_that_file(file_path)
             return ERROR_CODE
 
-        self.file = open( file_path , 'r')
+        self.file      = open( file_path , 'r')
         self.data_list = csv.reader(self.file)
+
         for self.data_tmp in self.data_list:
             self.data_str_tmp = str(self.data_tmp)
             self.data.append(self.data_str_tmp.split(","))
@@ -141,25 +139,47 @@ class CsvReader():
     def get_data(self):
         return self.data
 
-class CsvReaderViaNp():
+class csvReaderViaNp():
 
     #def __init__(self):
         
 
-    def readFile(self,file_path):
-        if isNull(file_path):
-            print(" input file_name ")
+    def read_file(self,file_path):
+        if is_null(file_path):
+            echo_null_of_a_value(file_path,locals())
             return ERROR_CODE
 
         if not os.path.exists(file_path):
-            print(" do not exist that file " + file_path)
+            echo_not_exist_that_file(file_path)
             return ERROR_CODE
 
-        self.data = np.genfromtxt(file_path,dtype = None,delimiter=",")
+        self.data = np.genfromtxt(file_path,dtype=None,delimiter=",")
         return NORMAL_CODE
 
     def get_data(self):
         return self.data
+
+def get_var_name( var, symboltable=locals(), error=None ) :
+    """
+    Return a var's name as a string.\nThis funciton require a symboltable(returned value of globals() or locals()) in the name space where you search the var's name.\nIf you set error='exception', this raise a ValueError when the searching failed.
+    """
+    print("val:" + var)
+    for key in symboltable.keys():
+        print(key)
+        if id(symboltable[key]) == id(var) :
+            return key
+    else :
+        if error == "exception" :
+            raise ValueError("Undefined function is mixed in subspace?")
+        else:
+            return error
+    return "error"
+
+def compare_type(val1,val2):
+    if type(val1) == type(val2):
+        return True
+    else:
+        return False
 
 ###########################################################
 #
@@ -169,5 +189,12 @@ class CsvReaderViaNp():
 def echo_open_any_file():
     print(" open any file ")
 
+def echo_not_exist_that_file(file_path):
+    print(" not exist that file :" + file_path)
 
+def echo_null_of_a_value(var,symboltable=locals()):
+    print(" a value is null :" + get_var_name(var,symboltable) )
+
+def echo_blank():
+    print("")
 
