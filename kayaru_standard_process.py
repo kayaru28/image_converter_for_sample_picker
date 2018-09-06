@@ -3,9 +3,15 @@ import os
 import sys
 import numpy as np
 import pandas as pd
+import datetime
+from time import sleep
 
 ERROR_CODE  = 100
 NORMAL_CODE = 0
+
+def exec_sleep(sec):
+    sleep(sec)
+
 
 def left(str, amount):
     return str[:amount]
@@ -53,6 +59,14 @@ def judge_error(exit_code):
 def get_script_dir():
     return os.path.abspath(os.path.dirname(__file__))
 
+def get_yyyymmdd():
+    return datetime.date.today()
+
+def get_yyyymmddhhmmss():
+    return datetime.datetime.now()
+
+
+
 ###########################################################
 #
 # varidation
@@ -95,11 +109,28 @@ class csvWriter():
 
         return NORMAL_CODE
 
+    def close_file(self):
+        if is_null(self.file):
+            echo_open_any_file()
+            return ERROR_CODE
+
+        self.file.close()
+
+    def write_of_val(self,val):
+        if is_null(self.file):
+            echo_open_any_file()
+            return ERROR_CODE
+        self.val_list = []
+        self.val_list.append(val)
+        self.writer = csv.writer(self.file, lineterminator='\n')
+        self.writer.writerow(self.val_list)
+        return NORMAL_CODE
+
     def write_of_list(self,list):
         if is_null(self.file):
             echo_open_any_file()
             return ERROR_CODE
-        self.writer = csv.writer(file, lineterminator='\n')
+        self.writer = csv.writer(self.file, lineterminator='\n')
         self.writer.writerow(list)
         return NORMAL_CODE
 
@@ -198,3 +229,5 @@ def echo_null_of_a_value(var,symboltable=locals()):
 def echo_blank():
     print("")
 
+def echo_start(process=""):
+    print(str(get_yyyymmddhhmmss()) + "\t start process " + process)

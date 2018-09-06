@@ -29,16 +29,34 @@ def echo_process_to(str):
     kstd.echo_blank()
     print("process to " + str)
 
-def create_output_file(output_file_path):
+def get_log_message(count_dir,count_image_file):
+    message = str(kstd.get_yyyymmddhhmmss())
+    message = message + "\tdir:" + "{0:03d}".format(count_dir)
+    message = message + "\tfile:" + "{0:07d}".format(count_image_file)
+    return message
 
-    dto_dir        = target_dir.dtoDirectories()
-    dto_image_list = image.dtoFlatImageDataNplistForTf()
+
+def exec_unit_process_for_create_output_file(directory,number):
     
-    csv_writer     = kstd.csvWriter()
-    directories    = dto_dir.get_list()
-    
+    unit_output = 2
+    unit_sleep  = 60 * 0.001
+
+    file_dir         = kstd.get_script_dir()
+    part_name        = str(kstd.get_yyyymmdd()) + "_no-" + "{0:02d}".format(number) + ".csv"
+    output_file_name = "output_file_" + part_name
+    output_file_path = os.path.join(file_dir,output_file_name)
+    log_file_name    = "log_file_" + part_name
+    print("vut" + log_file_name)
+    log_file_path    = os.path.join(file_dir,log_file_name)
+
+    dto_image_list    = image.dtoFlatImageDataNplistForTf()
+
+    csv_writer_output = kstd.csvWriter()
+
+    csv_writer_log    = kstd.csvWriter()
+    csv_writer_log.open_file(log_file_path)
+        
     # set meta data for dto_image_list
-    directory            = directories[0]
     image_file_path_list = glob.glob(directory + '\\*') 
     image_file_path      = image_file_path_list[0]
     height_0             = image.get_height_from_image(image_file_path)
@@ -47,20 +65,39 @@ def create_output_file(output_file_path):
     dto_image_list.firstlization(height_0,wigth_0)
     dto_image_list.val_check()
 
-    # get image flatten list
-    for directory in directories:
-        echo_process_to(directory)
-        image_file_path_list = glob.glob(directory + '\\*') 
+    echo_process_to(directory)
+    image_file_path_list = glob.glob(directory + '\\*') 
 
-        for image_file_path in image_file_path_list:
-            gray_image_val_d2   = image.conv_gray_image_2_npList(image_file_path)
-            gray_image_val_list = image.conv_image_nplist2d_2_flat(gray_image_val_d2)
-            dto_image_list.add_list(gray_image_val_list)
+    count_image_file = 0
+    for image_file_path in image_file_path_list:
+        gray_image_val_d2   = image.conv_gray_image_2_npList(image_file_path)
+        gray_image_val_list = image.conv_image_nplist2d_2_flat(gray_image_val_d2)
+        dto_image_list.add_list(gray_image_val_list)
+        count_image_file = count_image_file + 1
+        if(count_image_file % unit_output == 0):
+            message = get_log_message(number,count_image_file)
+            print(message)
+            csv_writer_log.write_of_val(message)
+            kstd.exec_sleep( unit_sleep )
+
+    csv_writer_log.close_file()
 
     # write for output files
-    csv_writer.open_file(output_file_path)
-    csv_writer.write_of_array2d(dto_image_list.get_list())
+    csv_writer_output.open_file(output_file_path)
+    csv_writer_output.write_of_array2d(dto_image_list.get_list())
+    csv_writer_output.close_file()
 
+
+
+def create_output_file(output_file_path):
+
+    dto_dir        = target_dir.dtoDirectories()
+    directories    = dto_dir.get_list()
+
+    # get image flatten list
+    # paralell
+    for di in range(len(directories)):
+        exec_unit_process_for_create_output_file(directories[di],di)
 
 if __name__ == "__main__":
 
@@ -73,9 +110,7 @@ if __name__ == "__main__":
     output_file_dir  = kstd.get_script_dir()
     output_file_name = "image_list_label" + label + ".csv"
     output_file_path = os.path.join(output_file_dir,output_file_name)
-
-    echo_process_to(output_file_name)
-    
+   
     create_output_file(output_file_path)
 
     kstd.echo_blank()
