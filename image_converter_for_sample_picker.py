@@ -7,6 +7,7 @@ import glob
 import numpy as np
 import pandas as pd
 import os
+import joblib as jl
 
 ERROR_CODE = 100
 # parameter
@@ -96,8 +97,8 @@ def create_output_file(output_file_path):
 
     # get image flatten list
     # paralell
-    for di in range(len(directories)):
-        exec_unit_process_for_create_output_file(directories[di],di)
+    len_di = len(directories)
+    result = jl.Parallel(n_jobs=-1)([jl.delayed(exec_unit_process_for_create_output_file)(directories[di],di) for di in range(len_di)])
 
 if __name__ == "__main__":
 
