@@ -76,6 +76,9 @@ class dtoFlatImageDataNplistForTf():
         self.flat_image_data_list = np.append(self.flat_image_data_list,self.list_tmp,axis = 0)
         return kstd.NORMAL_CODE
 
+    def clear_list(self):
+        self.flat_image_data_list = np.empty((0,self.list_size))
+
     def val_check(self):
         kstd.echo_blank()
         print("image height : " + str(self.height) ) 

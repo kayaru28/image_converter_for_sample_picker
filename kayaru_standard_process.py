@@ -4,14 +4,13 @@ import sys
 import numpy as np
 import pandas as pd
 import datetime
-from time import sleep
+import time
 
 ERROR_CODE  = 100
 NORMAL_CODE = 0
 
 def exec_sleep(sec):
-    sleep(sec)
-
+    time.sleep(sec)
 
 def left(str, amount):
     return str[:amount]
@@ -59,13 +58,25 @@ def judge_error(exit_code):
 def get_script_dir():
     return os.path.abspath(os.path.dirname(__file__))
 
+def get_file_name_from_path(file_path):
+    return os.path.basename(file_path)
+
 def get_yyyymmdd():
-    return datetime.date.today()
+    return str(datetime.date.today())
 
 def get_yyyymmddhhmmss():
-    return datetime.datetime.now()
+    return str(datetime.datetime.now())
 
+def get_time():
+    return time.time()
 
+def get_elapsed_time(base_time,unit="m"):
+    elapsed_time = time.time() - base_time
+    if unit == "m":
+        elapsed_time = elapsed_time / 60
+    elif unit == "h":
+        elapsed_time = elapsed_time / 60 / 60
+    return elapsed_time
 
 ###########################################################
 #
@@ -106,6 +117,15 @@ class csvWriter():
             return ERROR_CODE
 
         self.file = open( file_path , 'w')
+
+        return NORMAL_CODE
+
+    def open_file_for_add(self,file_path):
+        if is_null(file_path):
+            echo_null_of_a_value(file_path,locals())
+            return ERROR_CODE
+
+        self.file = open( file_path , 'a')
 
         return NORMAL_CODE
 
