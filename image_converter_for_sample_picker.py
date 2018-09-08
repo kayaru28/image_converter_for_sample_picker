@@ -157,7 +157,7 @@ def exec_unit_process_for_create_output_file(directory,dir_number):
     csv_writer_log.close_file()
 
 
-def create_output_file(output_file_path):
+def create_output_file():
 
     dto_dir        = prop.dtoDirectories()
     directories    = dto_dir.get_list()
@@ -177,13 +177,7 @@ if __name__ == "__main__":
     print("")
     print("")
 
-    label       = read_label()
-
-    output_file_dir  = kstd.get_script_dir()
-    output_file_name = "image_list_label" + label + ".csv"
-    output_file_path = os.path.join(output_file_dir,output_file_name)
-   
-    create_output_file(output_file_path)
+    create_output_file()
 
     kstd.echo_blank()
     print("finished!!!!!!!!!!111!!!!!!!!")
