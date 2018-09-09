@@ -1,14 +1,14 @@
 
 
-def get_X_is_not_int(name):
+def getXisNotInt(name):
     message = str(name) + " is not int"
     return message
 
-def get_X_is_not_str(name):
+def getXisNotStr(name):
     message = str(name) + " is not str"
     return message
 
-def get_X_is_not_list(name):
+def getXisNotList(name):
     message = str(name) + " is not list"
     return message
 

@@ -1,37 +1,37 @@
 import kayaru_standard_process  as kstd
 import kayaru_standard_messages as kstd_m
 
-def assertion_check(result,message):
+def assertionCheck(result,message):
     assert result,message
 
-def assertion_check_is_int(var,var_name=""):
-    result = kstd.is_int(var)
+def assertionCheckIsInt(var,var_name=""):
+    result = kstd.isInt(var)
     if not ( result ):
-        name    = kstd.get_var_name(var)
+        name    = kstd.getVarName(var)
         if var_name != "":
-            message = kstd_m.get_X_is_not_int(var_name)
+            message = kstd_m.get_XIs_not_int(var_name)
         else:
-            message = kstd_m.get_X_is_not_int("X")
-        assertion_check(result,message)
+            message = kstd_m.get_XIs_not_int(name)
+        assertionCheck(result,message)
 
-def assertion_check_is_str(var,var_name=""):
-    result = kstd.is_str(var)
+def assertionCheckIsStr(var,var_name=""):
+    result = kstd.isStr(var)
     if not ( result ):
-        name    = kstd.get_var_name(var)
+        name    = kstd.getVarName(var)
         if var_name != "":
-            message = kstd_m.get_X_is_not_str(var_name)
+            message = kstd_m.get_XIs_not_str(var_name)
         else:
-            message = kstd_m.get_X_is_not_str("X")
-        assertion_check(result,message)
+            message = kstd_m.get_XIs_not_int(name)
+        assertionCheck(result,message)
 
-def assertion_check_is_list(var,var_name=""):
-    result = kstd.is_list(var)
+def assertionCheckIsList(var,var_name=""):
+    result = kstd.isList(var)
     if not ( result ):
-        name    = kstd.get_var_name(var)
+        name    = kstd.getVarName(var)
         if var_name != "":
-            message = kstd_m.get_X_is_not_list(var_name)
+            message = kstd_m.get_XIs_not_list(var_name)
         else:
-            message = kstd_m.get_X_is_not_list("X")
-        assertion_check(result,message)
+            message = kstd_m.get_XIs_not_int(name)
+        assertionCheck(result,message)
 
 

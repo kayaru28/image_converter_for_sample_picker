@@ -1,7 +1,7 @@
 
 
 
-class propValues():
+class PropValues():
     def __init__(self):
 
         self.cycle_file        = 10000
@@ -13,12 +13,12 @@ class propValues():
 
 
 
-class dtoDirectories():
+class DtoDirectories():
     def __init__(self):
         self.directories = []
         self.directories.append("C:\\Users\\istor\\Desktop\\train\\test1")
         self.directories.append("C:\\Users\\istor\\Desktop\\train\\test2")
 
-    def get_list(self):
+    def getList(self):
         return self.directories
 

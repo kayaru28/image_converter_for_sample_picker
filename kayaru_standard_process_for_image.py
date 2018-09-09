@@ -3,21 +3,21 @@ import numpy as np
 import kayaru_standard_process as kstd
 import os
 
-def conv_gray_image_2_npList(image_file_path):
+def convGrayImage2NpList(image_file_path):
 
     if not os.path.exists(image_file_path):
-        kstd.echo_not_exist_that_file(image_file_path)
+        kstd.echoNotExistThatFile(image_file_path)
 
     gray_image = np.array(Image.open(image_file_path).convert('L'))
 
     return gray_image
 
-def conv_image_nplist2d_2_flat(image_nplist):
+def convImageNpList2d2Flat(image_nplist):
     flat_image_nplist = image_nplist.flatten()
 
     return flat_image_nplist   
 
-def check_image_size(height,wigth,flat_image_nplist):
+def checkImageSize(height,wigth,flat_image_nplist):
     base_length  = height * wigth
     given_length = flat_image_nplist.shape[0]
 
@@ -26,29 +26,29 @@ def check_image_size(height,wigth,flat_image_nplist):
     else:
         return False
 
-def get_height_from_image(image_file_path):
-    if kstd.is_null(image_file_path):
-        kstd.echo_null_of_a_value(image_file_path,locals())
+def getHeightFromImage(image_file_path):
+    if kstd.isNull(image_file_path):
+        kstd.echoNullOfAValue(image_file_path,locals())
         return 0
     if not os.path.exists(image_file_path):
-        kstd.echo_not_exist_that_file(image_file_path)
+        kstd.echoNotExistThatFile(image_file_path)
         return 0
     im = Image.open(image_file_path)
     w, h = im.size
     return h
 
-def get_wight_from_image(image_file_path):
-    if kstd.is_null(image_file_path):
-        kstd.echo_null_of_a_value(image_file_path,locals())
+def getWightFromImage(image_file_path):
+    if kstd.isNull(image_file_path):
+        kstd.echoNullOfAValue(image_file_path,locals())
         return 0
     if not os.path.exists(image_file_path):
-        kstd.echo_not_exist_that_file(image_file_path)
+        kstd.echoNotExistThatFile(image_file_path)
         return 0
     im   = Image.open(image_file_path)
     w, h = im.size
     return w
 
-class dtoFlatImageDataNplistForTf():
+class DtoFlatImageDataNplistForTf():
     def __init__(self):
         self.height               = 0
         self.wigth                = 0
@@ -61,12 +61,12 @@ class dtoFlatImageDataNplistForTf():
         self.flat_image_data_list = np.empty((0,self.list_size))
         self.list_tmp             = np.zeros((1,self.list_size))
         
-    def add_list(self,flat_image_nplist):
-        if not kstd.compare_type(self.flat_image_data_list,flat_image_nplist):
+    def addList(self,flat_image_nplist):
+        if not kstd.compareType(self.flat_image_data_list,flat_image_nplist):
             print("wrong image list!!!!!")
             return kstd.ERROR_CODE
 
-        if not check_image_size(self.height,self.wigth,flat_image_nplist):
+        if not checkImageSize(self.height,self.wigth,flat_image_nplist):
             print("not same image size!!!!!!")
             if( self.list_size == 0 ):
                 print("not firstlization height or wigth")
@@ -76,13 +76,13 @@ class dtoFlatImageDataNplistForTf():
         self.flat_image_data_list = np.append(self.flat_image_data_list,self.list_tmp,axis = 0)
         return kstd.NORMAL_CODE
 
-    def clear_list(self):
+    def clearList(self):
         self.flat_image_data_list = np.empty((0,self.list_size))
 
-    def val_check(self):
-        kstd.echo_blank()
+    def valCheck(self):
+        kstd.echoBlank()
         print("image height : " + str(self.height) ) 
         print("image wigth  : " + str(self.wigth) ) 
 
-    def get_list(self):
+    def getList(self):
         return self.flat_image_data_list

@@ -12,17 +12,17 @@ import os
 import joblib as jl
 
 
-def clear_image_path(image_path):
+def clearImagePath(image_path):
     ans = image_path
     clear_word = "["
-    ans = kstd.conv_a_to_b_in_word(ans,clear_word,"")
+    ans = kstd.convA2BinWord(ans,clear_word,"")
     clear_word = "]"
-    ans = kstd.conv_a_to_b_in_word(ans,clear_word,"")
+    ans = kstd.convA2BinWord(ans,clear_word,"")
     clear_word = "'"
-    ans = kstd.conv_a_to_b_in_word(ans,clear_word,"")
+    ans = kstd.convA2BinWord(ans,clear_word,"")
     return ans
 
-class samplePicker():
+class SamplePicker():
 
     def __init__(self):
         self.name_list_of_image = ""
@@ -32,7 +32,7 @@ class samplePicker():
     """
     def set_picking_size(self,picking_size):
         # validation
-        if not ( kstd.is_int(picking_size) ):
+        if not ( kstd.isInt(picking_size) ):
             self.name    = "picking_size"
             self.message = kstd_m.get_X_is_not_int(self.name)
             kstd.echo_error_occured(self.message)
@@ -48,53 +48,53 @@ class samplePicker():
     def sampling(self,picking_size,name_list):
 
         # validation for parameters
-        error_handler.assertion_check_is_int(picking_size,"picking_size")
-        error_handler.assertion_check_is_list(name_list,"name_list")
+        error_handler.assertionCheckIsInt(picking_size,"picking_size")
+        error_handler.assertionCheckIsList(name_list,"name_list")
 
         self.size       = len(name_list)
         self.index_end  = self.size - 1
         self.image_list = []
 
         for pi in range(picking_size):
-            self.index               = rand.get_var_int(self.index_0,self.index_end)
+            self.index               = rand.getVarInt(self.index_0,self.index_end)
             self.image_file_path     = name_list[self.index]
-            self.gray_image_var_d2   = image.conv_gray_image_2_npList(self.image_file_path)
-            self.gray_image_var_nplist = image.conv_image_nplist2d_2_flat(self.gray_image_var_d2)
+            self.gray_image_var_d2   = image.convGrayImage2NpList(self.image_file_path)
+            self.gray_image_var_nplist = image.convImageNpList2d2Flat(self.gray_image_var_d2)
             self.image_list.append(self.gray_image_var_nplist)
 
         return self.image_list
 
-def read_name_list(name_list_path):
-    name_list_file = kstd.csvReader()
-    name_list_file.open_file(name_list_path)
-    name_list_file.read_file()
-    name_list_row = name_list_file.get_data()
-    name_list_file.close_file() 
+def readNameList(name_list_path):
+    name_list_file = kstd.CsvReader()
+    name_list_file.openFile(name_list_path)
+    name_list_file.readFile()
+    name_list_row = name_list_file.getData()
+    name_list_file.closeFile() 
 
     name_list = []
     for row in name_list_row:
-        name = clear_image_path(row[0])
+        name = clearImagePath(row[0])
         name_list.append(name)
 
     return name_list
 
 if __name__ == "__main__":
 
-    kstd.echo_blank()
-    kstd.echo_bar()
-    kstd.echo_blank()
+    kstd.echoBlank()
+    kstd.echoBar()
+    kstd.echoBlank()
     
     test_path = "C:\\Users\\istor\\Desktop\\work\\Git\\004_sample_picker\\sample_picker\\_name_list_2018-09-08_no-00.csv"
     picking_size = 10
 
-    name_list     = read_name_list(test_path)
-    sample_picker = samplePicker()
+    name_list     = readNameList(test_path)
+    sample_picker = SamplePicker()
     image_list    = sample_picker.sampling(picking_size,name_list)
-    kstd.echo_list1d(image_list)
+    kstd.echoList1d(image_list)
 
 
-    kstd.echo_bar()
-    kstd.echo_blank()
+    kstd.echoBar()
+    kstd.echoBlank()
     print("finished!!!!!!!!!!111!!!!!!!!")
 
 

@@ -10,7 +10,7 @@ import inspect
 ERROR_CODE  = 100
 NORMAL_CODE = 0
 
-def exec_sleep(sec):
+def execSleep(sec):
     time.sleep(sec)
 
 def left(str, amount):
@@ -34,48 +34,48 @@ def min(a,b):
         ans = b
     return ans
 
-def cut_str_before_key(key,str):
+def cutStrBeforeKey(key,str):
     no  = patternMatch(key,str)
     ans = left( str , no - 1) 
     return ans
 
-def cut_str_after_key(key,str):
+def cutStrAfterKey(key,str):
     no  = patternMatch(key,str)
     no  = no + ( len(key) - 1 )
     ans = right( str , len(str) - no )
     return ans
 
-def pattern_match(key,str):
+def patternMatch(key,str):
     # 一致する　：＞0
     # 一致しない：＝0
     ans = str.find(key) + 1
     return ans
 
-def judge_error(exit_code):
+def judgeError(exit_code):
     if exit_code == ERROR_CODE:
         print("!!!!ERROR OCCURED!!!!11!!")
         sys.exit()
 
-def conv_a_to_b_in_word(word,a,b):
+def convA2BinWord(word,a,b):
     ans = word.replace(a, b) 
     return ans
 
-def get_script_dir():
+def getScriptDir():
     return os.path.abspath(os.path.dirname(__file__))
 
-def get_file_name_from_path(file_path):
+def getFileNameFromPath(file_path):
     return os.path.basename(file_path)
 
-def get_yyyymmdd():
+def getDateyyyymmdd():
     return str(datetime.date.today())
 
-def get_yyyymmddhhmmss():
+def getTimeyyyymmddhhmmss():
     return str(datetime.datetime.now())
 
-def get_time():
+def getTime():
     return time.time()
 
-def get_elapsed_time(base_time,unit="m"):
+def getElapsedTime(base_time,unit="m"):
     elapsed_time = time.time() - base_time
     if unit == "m":
         elapsed_time = elapsed_time / 60
@@ -89,7 +89,7 @@ def get_elapsed_time(base_time,unit="m"):
 #
 ###########################################################
 
-def is_not_null(str):
+def isNotNull(str):
     ans = True
 
     if(str == None):
@@ -98,7 +98,7 @@ def is_not_null(str):
         ans = False
     return ans
 
-def is_null(str):
+def isNull(str):
     ans = False
     if(str == None):
         ans = True
@@ -106,31 +106,31 @@ def is_null(str):
         ans = True
     return ans
 
-def is_int(val):
+def isInt(val):
     if type(val) is int:
         return True
     else:
         return False
 
-def is_str(val):
+def isStr(val):
     if type(val) is str:
         return True
     else:
         return False
 
-def is_tuple(target):
+def isTuple(target):
     if isinstance(target, tuple):
         return True
     else:
         return False
 
-def is_list(target):
+def isList(target):
     if isinstance(target, list):
         return True
     else:
         return False
 
-def is_even_number(val):
+def isEvenNumber(val):
 
     if not type(val) is int:
         return False
@@ -145,41 +145,41 @@ def is_even_number(val):
 #
 ###########################################################
 
-class csvWriter():
+class CsvWriter():
     def __init__(self):
         self.file = ""
 
-    def open_file(self,file_path):
-        if is_null(file_path):
-            echo_null_of_a_value(file_path,locals())
+    def openFile(self,file_path):
+        if isNull(file_path):
+            echoNullOfAValue(file_path,locals())
             return ERROR_CODE
         
         self.file = open( file_path , 'w')
 
         return NORMAL_CODE
 
-    def open_file_for_add(self,file_path):
-        if is_null(file_path):
-            echo_null_of_a_value(file_path,locals())
+    def openFileForAdd(self,file_path):
+        if isNull(file_path):
+            echoNullOfAValue(file_path,locals())
             return ERROR_CODE
         if not os.path.exists(file_path):
-            echo_not_exist_that_file(file_path)
+            echoNotExistThatFile(file_path)
             return ERROR_CODE
 
         self.file = open( file_path , 'a')
 
         return NORMAL_CODE
 
-    def close_file(self):
-        if is_null(self.file):
-            echo_open_any_file()
+    def closeFile(self):
+        if isNull(self.file):
+            echoOpenAnyFile()
             return ERROR_CODE
 
         self.file.close()
 
-    def write_of_val(self,val):
-        if is_null(self.file):
-            echo_open_any_file()
+    def writeOfVal(self,val):
+        if isNull(self.file):
+            echoOpenAnyFile()
             return ERROR_CODE
         self.val_list = []
         self.val_list.append(val)
@@ -187,52 +187,52 @@ class csvWriter():
         self.writer.writerow(self.val_list)
         return NORMAL_CODE
 
-    def write_of_list(self,list):
-        if is_null(self.file):
-            echo_open_any_file()
+    def writeOfList(self,var_list):
+        if isNull(self.file):
+            echoOpenAnyFile()
             return ERROR_CODE
         self.writer = csv.writer(self.file, lineterminator='\n')
-        self.writer.writerow(list)
+        self.writer.writerow(var_list)
         return NORMAL_CODE
 
-    def write_of_array2d(self,array_2d):
-        if is_null(self.file):
-            echo_open_any_file()
+    def writeOfArray2d(self,array_2d):
+        if isNull(self.file):
+            echoOpenAnyFile()
             return ERROR_CODE
         self.writer = csv.writer(self.file, lineterminator='\n')
         self.writer.writerows(array_2d)
         return NORMAL_CODE
 
-class csvReader():
+class CsvReader():
 
     def __init__(self):
         self.file = ""
-        self.data      = [[]]
+        self.data = [[]]
 
-    def open_file(self,file_path):
-        if is_null(file_path):
-            echo_null_of_a_value(file_path,locals())
+    def openFile(self,file_path):
+        if isNull(file_path):
+            echoNullOfAValue(file_path,locals())
             return ERROR_CODE
 
         if not os.path.exists(file_path):
-            echo_not_exist_that_file(file_path)
+            echoNotExistThatFile(file_path)
             return ERROR_CODE
 
         self.file = open( file_path , "r")
 
         return NORMAL_CODE
 
-    def close_file(self):
-        if is_null(self.file):
-            echo_open_any_file()
+    def closeFile(self):
+        if isNull(self.file):
+            echoOpenAnyFile()
             return ERROR_CODE
 
         self.file.close()
 
-    def read_file(self):
+    def readFile(self):
 
-        if is_null(self.file):
-            echo_open_any_file()
+        if isNull(self.file):
+            echoOpenAnyFile()
             return ERROR_CODE
 
         self.data_list = csv.reader(self.file)
@@ -245,26 +245,26 @@ class csvReader():
 
         return NORMAL_CODE
 
-    def get_data(self):
+    def getData(self):
         return self.data
 
-class csvReaderViaNp():
+class CsvReaderViaNp():
 
     #def __init__(self):
 
-    def read_file(self,file_path):
-        if is_null(self.file):
-            echo_open_any_file()
+    def readFile(self,file_path):
+        if isNull(self.file):
+            echoOpenAnyFile()
             return ERROR_CODE
 
         self.data = np.genfromtxt(file_path,dtype=None,delimiter=",")
         return NORMAL_CODE
 
-    def get_data(self):
+    def getData(self):
         return self.data
 
 
-def get_var_name( var, symboltable=locals(), error=None ) :
+def getVarName( var, symboltable=locals(), error=None ) :
     ans = "("
     for key in symboltable.keys():
         # in consideration of exsisting paires of same id variable
@@ -273,7 +273,7 @@ def get_var_name( var, symboltable=locals(), error=None ) :
     ans = ans + " )"
     return ans
 
-def compare_type(val1,val2):
+def compareType(val1,val2):
     if type(val1) == type(val2):
         return True
     else:
@@ -287,24 +287,24 @@ def compare_type(val1,val2):
 
 #### layer 1 messages
 
-def echo_open_any_file():
+def echoOpenAnyFile():
     print(" open any file ")
 
-def echo_not_exist_that_file(file_path):
+def echoNotExistThatFile(file_path):
     print(" not exist that file :" + file_path)
 
-def echo_null_of_a_value(var,symboltable=locals()):
-    print(" a value is null :" + get_var_name(var,symboltable) )
+def echoNullOfAValue(var,symboltable=locals()):
+    print(" a value is null :" + getVarName(var,symboltable) )
 
-def echo_blank():
+def echoBlank():
     print("")
 
-def echo_start(process=""):
+def echoStart(process=""):
     print(str(get_yyyymmddhhmmss()) + "\t start process " + process)
 
-def echo_bar(length="50",mark="*"):
+def echoBar(length="50",mark="*"):
     
-    if not (is_int(length)):
+    if not (isInt(length)):
         length = 50
 
     bar = ""
@@ -312,20 +312,20 @@ def echo_bar(length="50",mark="*"):
         bar = bar + mark
     print(bar)
 
-def echo_list1d(x_list):
+def echoList1d(x_list):
     for row in x_list:
         print(row)
 
 
 #### layer 2 messages
 
-def echo_error_occured(detail=""):
-    echo_blank()
-    echo_bar()
+def echoErrorOccured(detail=""):
+    echoBlank()
+    echoBar()
     print("error is occured !!!!!!!!")
     if(detail!=""):
         print("\t(detail) " + detail)
-    echo_bar()
-    echo_blank()
+    echoBar()
+    echoBlank()
 
 

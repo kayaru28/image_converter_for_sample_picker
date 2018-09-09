@@ -2,20 +2,20 @@ import random
 import kayaru_standard_process as kstd
 
 
-def get_var_int(start,end):
+def getVarInt(start,end):
     
-    if not ( kstd.is_int(start) ):
+    if not ( kstd.isInt(start) ):
         message = "start is not int"
-        kstd.echo_error_occured(message)
+        kstd.echoErrorOccured(message)
         return None
-    elif not ( kstd.is_int(end) ):
+    elif not ( kstd.isInt(end) ):
         message = "end is not int"
-        kstd.echo_error_occured(message)
+        kstd.echoErrorOccured(message)
         return None
 
     if (start > end):
         message = "start is bigger than end"
-        kstd.echo_error_occured(message)
+        kstd.echoErrorOccured(message)
         return None
 
     step    = 1
@@ -23,20 +23,20 @@ def get_var_int(start,end):
     var_int = random.randrange(start,end,step)
     return var_int
 
-def get_var_even_int(start,end):
+def getVarEvenInt(start,end):
     
-    if not ( kstd.is_even_number(start) ):
+    if not ( kstd.isEvenNumber(start) ):
         message = "start is not even number"
-        kstd.echo_error_occured(message)
+        kstd.echoErrorOccured(message)
         return None
-    elif not ( kstd.is_even_number(end) ):
+    elif not ( kstd.isEvenNumber(end) ):
         message = "end is not even number"
-        kstd.echo_error_occured(message)
+        kstd.echoErrorOccured(message)
         return None
 
     if (start > end):
         message = "start is bigger than end"
-        kstd.echo_error_occured(message)
+        kstd.echoErrorOccured(message)
         return None
 
     step = 2
