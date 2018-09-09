@@ -312,6 +312,11 @@ def echo_bar(length="50",mark="*"):
         bar = bar + mark
     print(bar)
 
+def echo_list1d(x_list):
+    for row in x_list:
+        print(row)
+
+
 #### layer 2 messages
 
 def echo_error_occured(detail=""):

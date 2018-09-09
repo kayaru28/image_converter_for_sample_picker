@@ -2,7 +2,7 @@ import random
 import kayaru_standard_process as kstd
 
 
-def get_val_int(start,end):
+def get_var_int(start,end):
     
     if not ( kstd.is_int(start) ):
         message = "start is not int"
@@ -20,10 +20,10 @@ def get_val_int(start,end):
 
     step    = 1
     end     = end + 1
-    val_int = random.randrange(start,end,step)
-    return val_int
+    var_int = random.randrange(start,end,step)
+    return var_int
 
-def get_val_even_int(start,end):
+def get_var_even_int(start,end):
     
     if not ( kstd.is_even_number(start) ):
         message = "start is not even number"
@@ -40,8 +40,8 @@ def get_val_even_int(start,end):
         return None
 
     step = 2
-    val_even_number = random.randrange(start,end,step)
-    return val_even_number
+    var_even_number = random.randrange(start,end,step)
+    return var_even_number
 
 
 
