@@ -118,6 +118,18 @@ def is_str(val):
     else:
         return False
 
+def is_tuple(target):
+    if isinstance(target, tuple):
+        return True
+    else:
+        return False
+
+def is_list(target):
+    if isinstance(target, list):
+        return True
+    else:
+        return False
+
 def is_even_number(val):
 
     if not type(val) is int:
