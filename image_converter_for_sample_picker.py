@@ -12,20 +12,6 @@ import joblib as jl
 ERROR_CODE = 100
 # parameter
 
-def read_label():
-    dim_label = 0
-    file_dir  = kstd.get_script_dir()
-    file_path = file_dir + "/label.csv"
-    csvReader = kstd.csvReaderViaNp()
-
-    EXIT_CODE = csvReader.read_file(file_path)
-
-    kstd.judge_error(EXIT_CODE)
-
-    label_tmp = csvReader.get_data()
-    label     = str(label_tmp)
-    return label
-
 def echo_process_to(str):
     kstd.echo_blank()
     print("process to " + str)
