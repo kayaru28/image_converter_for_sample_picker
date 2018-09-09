@@ -34,8 +34,8 @@ def assertionCheckIsList(var,var_name=""):
             message = kstd_m.getXisNotList(name)
         assertionCheck(result,message)
 
-def assertionCheckMagnitudeRelationship(smaller,bigger,var_name_smaller,var_name_bigger=""):
-    result = if( smaller <= bigger )
+def assertionCheckMagnitudeRelationship(smaller,bigger,var_name_smaller="",var_name_bigger=""):
+    result = kstd.isBigger( smaller , bigger )
     if not ( result ):
         message = "magnitude relatinship is error"
         assertionCheck(result,message)

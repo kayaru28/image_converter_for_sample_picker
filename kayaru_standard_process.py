@@ -139,6 +139,19 @@ def isEvenNumber(val):
     else:
         return False
 
+def isBigger(smaller,bigger):
+    if smaller <= bigger:
+        return True
+    else:
+        return False
+
+def isSmaller(smaller,bigger):
+    if smaller <= bigger:
+        return True
+    else:
+        return False
+
+
 ###########################################################
 #
 # read and write for csv
@@ -300,7 +313,7 @@ def echoBlank():
     print("")
 
 def echoStart(process=""):
-    print(str(get_yyyymmddhhmmss()) + "\t start process " + process)
+    print(str(getTimeyyyymmddhhmmss()) + "\t start process " + process)
 
 def echoBar(length="50",mark="*"):
     
