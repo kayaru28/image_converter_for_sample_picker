@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import datetime
 import time
+import inspect
 
 ERROR_CODE  = 100
 NORMAL_CODE = 0
@@ -55,6 +56,10 @@ def judge_error(exit_code):
         print("!!!!ERROR OCCURED!!!!11!!")
         sys.exit()
 
+def conv_a_to_b_in_word(word,a,b):
+    ans = word.replace(a, b) 
+    return ans
+
 def get_script_dir():
     return os.path.abspath(os.path.dirname(__file__))
 
@@ -101,6 +106,27 @@ def is_null(str):
         ans = True
     return ans
 
+def is_int(val):
+    if type(val) is int:
+        return True
+    else:
+        return False
+
+def is_str(val):
+    if type(val) is str:
+        return True
+    else:
+        return False
+
+def is_even_number(val):
+
+    if not type(val) is int:
+        return False
+    elif ( val % 2 == 0 ):
+        return True
+    else:
+        return False
+
 ###########################################################
 #
 # read and write for csv
@@ -115,7 +141,7 @@ class csvWriter():
         if is_null(file_path):
             echo_null_of_a_value(file_path,locals())
             return ERROR_CODE
-
+        
         self.file = open( file_path , 'w')
 
         return NORMAL_CODE
@@ -123,6 +149,9 @@ class csvWriter():
     def open_file_for_add(self,file_path):
         if is_null(file_path):
             echo_null_of_a_value(file_path,locals())
+            return ERROR_CODE
+        if not os.path.exists(file_path):
+            echo_not_exist_that_file(file_path)
             return ERROR_CODE
 
         self.file = open( file_path , 'a')
@@ -165,9 +194,10 @@ class csvWriter():
 class csvReader():
 
     def __init__(self):
+        self.file = ""
         self.data      = [[]]
 
-    def read_file(self,file_path):
+    def open_file(self,file_path):
         if is_null(file_path):
             echo_null_of_a_value(file_path,locals())
             return ERROR_CODE
@@ -176,7 +206,23 @@ class csvReader():
             echo_not_exist_that_file(file_path)
             return ERROR_CODE
 
-        self.file      = open( file_path , 'r')
+        self.file = open( file_path , "r")
+
+        return NORMAL_CODE
+
+    def close_file(self):
+        if is_null(self.file):
+            echo_open_any_file()
+            return ERROR_CODE
+
+        self.file.close()
+
+    def read_file(self):
+
+        if is_null(self.file):
+            echo_open_any_file()
+            return ERROR_CODE
+
         self.data_list = csv.reader(self.file)
 
         for self.data_tmp in self.data_list:
@@ -193,15 +239,10 @@ class csvReader():
 class csvReaderViaNp():
 
     #def __init__(self):
-        
 
     def read_file(self,file_path):
-        if is_null(file_path):
-            echo_null_of_a_value(file_path,locals())
-            return ERROR_CODE
-
-        if not os.path.exists(file_path):
-            echo_not_exist_that_file(file_path)
+        if is_null(self.file):
+            echo_open_any_file()
             return ERROR_CODE
 
         self.data = np.genfromtxt(file_path,dtype=None,delimiter=",")
@@ -210,21 +251,15 @@ class csvReaderViaNp():
     def get_data(self):
         return self.data
 
+
 def get_var_name( var, symboltable=locals(), error=None ) :
-    """
-    Return a var's name as a string.\nThis funciton require a symboltable(returned value of globals() or locals()) in the name space where you search the var's name.\nIf you set error='exception', this raise a ValueError when the searching failed.
-    """
-    print("val:" + var)
+    ans = "("
     for key in symboltable.keys():
-        print(key)
+        # in consideration of exsisting paires of same id variable
         if id(symboltable[key]) == id(var) :
-            return key
-    else :
-        if error == "exception" :
-            raise ValueError("Undefined function is mixed in subspace?")
-        else:
-            return error
-    return "error"
+            ans = ans + " "  + key
+    ans = ans + " )"
+    return ans
 
 def compare_type(val1,val2):
     if type(val1) == type(val2):
@@ -237,6 +272,9 @@ def compare_type(val1,val2):
 # messages
 #
 ###########################################################
+
+#### layer 1 messages
+
 def echo_open_any_file():
     print(" open any file ")
 
@@ -251,3 +289,26 @@ def echo_blank():
 
 def echo_start(process=""):
     print(str(get_yyyymmddhhmmss()) + "\t start process " + process)
+
+def echo_bar(length="50",mark="*"):
+    
+    if not (is_int(length)):
+        length = 50
+
+    bar = ""
+    for i in range(length):
+        bar = bar + mark
+    print(bar)
+
+#### layer 2 messages
+
+def echo_error_occured(detail=""):
+    echo_blank()
+    echo_bar()
+    print("error is occured !!!!!!!!")
+    if(detail!=""):
+        print("\t(detail) " + detail)
+    echo_bar()
+    echo_blank()
+
+
