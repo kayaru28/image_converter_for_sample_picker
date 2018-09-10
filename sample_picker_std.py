@@ -22,13 +22,34 @@ def clearImagePath(image_path):
     ans = kstd.convA2BinWord(ans,clear_word,"")
     return ans
 
+
+class DtoPickeredSample():
+    def __init__(self):
+        self.sample_list = []
+        self.label_list = []
+        
+    def firstlization(self):
+        self.sample_list = []
+        self.label_list  = []
+
+    def addLists(self,sample_list,label_list):
+        self.sample_list.extend(sample_list)
+        self.label_list.extend(label_list)
+
+    def getSampleList(self):
+        return self.sample_list
+
+    def getLabelList(self):
+        return self.label_list
+
 class SamplePicker():
 
     def __init__(self):
-        self.name_list_of_image = ""
-        self.picking_size       = ""
+        self.name_list_of_image  = ""
+        self.picking_size        = ""
         
-        self.index_0            = 0
+        self.index_0             = 0
+        self.dto_pickered_sample = DtoPickeredSample()
     """
     def set_picking_size(self,picking_size):
         # validation
@@ -45,7 +66,7 @@ class SamplePicker():
         self.name_list_of_image = name_list
     """
 
-    def sampling(self,picking_size,name_list):
+    def sampling(self,dto_pickered_sample,picking_size,name_list,label):
 
         # validation for parameters
         error_handler.assertionCheckIsInt(picking_size,"picking_size")
@@ -54,6 +75,16 @@ class SamplePicker():
         self.size       = len(name_list)
         self.index_end  = self.size - 1
         self.image_list = []
+        self.label_list = []
+        self.posi_label = 1
+        self.nega_label = 0
+
+        if label == self.posi_label:
+            self.unit_label = [1,0]
+        elif label == self.nega_label:
+            self.unit_label = [0,1]
+        else:
+            error_handler.assertionCheck(False,"settinglabel is wrong")
 
         for pi in range(picking_size):
             self.index               = rand.getVarInt(self.index_0,self.index_end)
@@ -61,8 +92,14 @@ class SamplePicker():
             self.gray_image_var_d2   = image.convGrayImage2NpList(self.image_file_path)
             self.gray_image_var_nplist = image.convImageNpList2d2Flat(self.gray_image_var_d2)
             self.image_list.append(self.gray_image_var_nplist)
+            self.label_list.append(self.unit_label)
 
-        return self.image_list
+        error_handler.assertionCheckIsList(self.image_list,"image_list in sample picker")
+        error_handler.assertionCheckIsList(self.label_list,"label_list in sample picker")
+
+        dto_pickered_sample.addLists(self.image_list,self.label_list)
+
+        return kstd.NORMAL_CODE
 
 def readNameList(name_list_path):
     name_list_file = kstd.CsvReader()
@@ -89,9 +126,7 @@ if __name__ == "__main__":
 
     name_list     = readNameList(test_path)
     sample_picker = SamplePicker()
-    image_list    = sample_picker.sampling(picking_size,name_list)
-    kstd.echoList1d(image_list)
-
+    dto_pickered_sample = sample_picker.sampling(picking_size,name_list)
 
     kstd.echoBar()
     kstd.echoBlank()
