@@ -16,13 +16,20 @@ import os
 import joblib as jl
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> new
 def getNameOfPosiNameList(number):
     return "_TC_{0:02d}.csv".format(number)
 
 def getNameOfNegaNameList(number):
     return "_nonTC_{0:02d}.csv".format(number)
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> new
 def getPosiRate():
     rand_min           = int( prop.posi_rate_min * 10 )
     rand_max           = int( prop.posi_rate_max * 10 )
@@ -42,7 +49,11 @@ def getNegaImageList(dto_pickered_sample,nega_sample_size):
     sample_picker       = sp_std.SamplePicker()
 
     for ni in range(prop.nega_list_total):
+<<<<<<< HEAD
 
+=======
+        kstd.echoStart("dir number:" + str(ni) + " is start")
+>>>>>>> new
         file_dir       = prop.dir_of_name_list_file
         file_name      = getNameOfNegaNameList(ni)
         name_list_path = os.path.join(file_dir,file_name)
@@ -68,6 +79,30 @@ def getPosiImageList(dto_pickered_sample,posi_sample_size):
     
     return kstd.NORMAL_CODE   
 
+<<<<<<< HEAD
+=======
+def outputPickerdSample(sample_list,label_list):
+    error_handler.assertionCheckIsList(sample_list,"sample_list")
+    error_handler.assertionCheckIsList(label_list,"label_list")
+
+    print("input this case number")
+    case_number = int(kstd.getKeyboadInput())
+
+    writer = kstd.CsvWriter()
+
+    sample_list_name = "sample_list_{0:04d}.csv".format(case_number)
+    sample_list_path = os.path.join(prop.base_dir_path,sample_list_name)
+    writer.openFile(sample_list_path)
+    writer.writeOfArray2d(sample_list)
+    writer.closeFile()
+    
+    label_list_name = "label_list_{0:04d}.csv".format(case_number)
+    label_list_path = os.path.join(prop.base_dir_path,label_list_name)
+    writer.openFile(label_list_path)
+    writer.writeOfArray2d(label_list)
+    writer.closeFile()
+
+>>>>>>> new
 if __name__ == "__main__":
 
     kstd.echoBlank()
@@ -84,8 +119,11 @@ if __name__ == "__main__":
     getNegaImageList(dto_pickered_sample,nega_sample_size)
     kstd.echoBar()
     kstd.echoBar()
+<<<<<<< HEAD
     print(dto_pickered_sample.getLabelList())    
 
+=======
+>>>>>>> new
 
     # posi sample picking
     getPosiImageList(dto_pickered_sample,posi_sample_size)
@@ -93,8 +131,12 @@ if __name__ == "__main__":
     sample_list = dto_pickered_sample.getSampleList()
     label_list  = dto_pickered_sample.getLabelList()
     
+<<<<<<< HEAD
     kstd.echoList1d(sample_list)
     kstd.echoList1d(label_list)
+=======
+    outputPickerdSample(sample_list,label_list)
+>>>>>>> new
 
     kstd.echoBlank()
     kstd.echoBar()
