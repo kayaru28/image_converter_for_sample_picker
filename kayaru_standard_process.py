@@ -11,7 +11,7 @@ ERROR_CODE  = 100
 NORMAL_CODE = 0
 
 def getKeyboadInput():
-    ans = raw_input()
+    ans = input()
     return ans
 
 def execSleep(sec):
@@ -304,7 +304,7 @@ def echoBlank():
     print("")
 
 def echoStart(process=""):
-    print(str(get_yyyymmddhhmmss()) + "\t start process " + process)
+    print(str(getTimeyyyymmddhhmmss()) + "\t start process " + process)
 
 def echoBar(length="50",mark="*"):
     
