@@ -9,9 +9,9 @@ def assertionCheckIsInt(var,var_name=""):
     if not ( result ):
         name    = kstd.getVarName(var)
         if var_name != "":
-            message = kstd_m.get_XIs_not_int(var_name)
+            message = kstd_m.getXisNotInt(var_name)
         else:
-            message = kstd_m.get_XIs_not_int(name)
+            message = kstd_m.getXisNotInt(name)
         assertionCheck(result,message)
 
 def assertionCheckIsStr(var,var_name=""):
@@ -19,9 +19,9 @@ def assertionCheckIsStr(var,var_name=""):
     if not ( result ):
         name    = kstd.getVarName(var)
         if var_name != "":
-            message = kstd_m.get_XIs_not_str(var_name)
+            message = kstd_m.getXisNotStr(var_name)
         else:
-            message = kstd_m.get_XIs_not_int(name)
+            message = kstd_m.getXisNotStr(name)
         assertionCheck(result,message)
 
 def assertionCheckIsList(var,var_name=""):
@@ -29,9 +29,9 @@ def assertionCheckIsList(var,var_name=""):
     if not ( result ):
         name    = kstd.getVarName(var)
         if var_name != "":
-            message = kstd_m.get_XIs_not_list(var_name)
+            message = kstd_m.getXisNotList(var_name)
         else:
-            message = kstd_m.get_XIs_not_int(name)
+            message = kstd_m.getXisNotList(name)
         assertionCheck(result,message)
 
 
