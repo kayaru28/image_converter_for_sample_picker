@@ -10,6 +10,10 @@ import inspect
 ERROR_CODE  = 100
 NORMAL_CODE = 0
 
+def getKeyboadInput():
+    ans = raw_input()
+    return ans
+
 def execSleep(sec):
     time.sleep(sec)
 
