@@ -87,9 +87,9 @@ class SamplePicker():
             error_handler.assertionCheck(False,"settinglabel is wrong")
 
         for pi in range(picking_size):
-            self.index               = rand.getVarInt(self.index_0,self.index_end)
-            self.image_file_path     = name_list[self.index]
-            self.gray_image_var_d2   = image.convGrayImage2NpList(self.image_file_path)
+            self.index                 = rand.getVarInt(self.index_0,self.index_end)
+            self.image_file_path       = name_list[self.index]
+            self.gray_image_var_d2     = image.convGrayImage2NpList(self.image_file_path)
             self.gray_image_var_nplist = image.convImageNpList2d2Flat(self.gray_image_var_d2)
             self.image_list.append(self.gray_image_var_nplist)
             self.label_list.append(self.unit_label)
@@ -121,12 +121,15 @@ if __name__ == "__main__":
     kstd.echoBar()
     kstd.echoBlank()
     
-    test_path = "C:\\Users\\istor\\Desktop\\work\\Git\\004_sample_picker\\sample_picker\\_name_list_2018-09-08_no-00.csv"
+    test_path = "C:\\Users\\istor\\Desktop\\work\\102_DSL_cyclone_classification\\name_list\\_nonTC_00.csv"
     picking_size = 10
 
     name_list     = readNameList(test_path)
     sample_picker = SamplePicker()
-    dto_pickered_sample = sample_picker.sampling(picking_size,name_list)
+
+    dto_pickered_sample = DtoPickeredSample()
+    label = 1
+    sample_picker.sampling(dto_pickered_sample,picking_size,name_list,label)
 
     kstd.echoBar()
     kstd.echoBlank()
