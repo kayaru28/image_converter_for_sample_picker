@@ -118,6 +118,7 @@ if __name__ == "__main__":
     kstd.echoBar()
     kstd.echoBlank()
     print("finished!!!!!!!!!!111!!!!!!!!")
+    print("time is " + kstd.getTimeyyyymmddhhmmss())
 
 
 
